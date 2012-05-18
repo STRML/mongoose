@@ -48,7 +48,7 @@ Suppose you are storing credit card numbers and you want to hide everything exce
     });
 
 
-**Important!** Getters/Setters are not invoked in calls to `Model.update()`.
+**Important!** Note that getters only works when creating or modifying `Document` instances; it will not be invoked when `Document` instances are not involved like in `Model.update()`.
 
 ## Summary
 

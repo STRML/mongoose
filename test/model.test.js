@@ -3111,11 +3111,18 @@ module.exports = {
     });
   },
 
-  'passing null in pre hook works': function () {
+  'passing undefined and null in pre hook works': function () {
     var db = start();
     var schema = new Schema({ name: String });
+    var called = 0;
 
     schema.pre('save', function (next) {
+      called++;
+      next(undefined); // <<-----
+    });
+
+    schema.pre('save', function (next) {
+      called++;
       next(null); // <<-----
     });
 
@@ -3124,9 +3131,9 @@ module.exports = {
 
     s.save(function (err) {
       db.close();
+      called.should.equal(2);
       should.strictEqual(null, err);
     });
-
   },
 
   'pre hooks called on all sub levels': function () {
@@ -3408,10 +3415,10 @@ module.exports = {
       , {title: 'interoperable find as promise 2'}
       , function (err, createdOne, createdTwo) {
       should.strictEqual(err, null);
-      var query = BlogPost.find({title: 'interoperable find as promise 2'});
+      var query = BlogPost.find({title: 'interoperable find as promise 2'}).sort('_id', 1)
       var promise = query.run();
       promise.addBack(function (err, found) {
-        should.strictEqual(err, null);
+        should.strictEqual(err, null, err && err.stack);
         found.length.should.equal(2);
         found[0].id;
         found[1].id;
@@ -4209,6 +4216,7 @@ module.exports = {
     var db = start();
 
     db.on('error', function (err) {
+      if (/connection closed/.test(err.message)) return;
       /^E11000 duplicate key error index:/.test(err.message).should.equal(true);
       db.close();
     });
@@ -4590,5 +4598,45 @@ module.exports = {
         affected.should.equal(1);
       });
     });
+  },
+
+  // gh-742
+  'setting an unset default value is saved': function () {
+    var db = start();
+
+    var DefaultTestObject = db.model("defaultTestObject",
+      new Schema({
+        score:{type:Number, "default":55}
+      })
+    );
+
+    var myTest = new DefaultTestObject();
+
+    myTest.save(function (err, doc){
+      should.strictEqual(null, err);
+      should.equal(doc.score, 55);
+
+      DefaultTestObject.findById(doc._id, function (err, doc){
+        should.strictEqual(null, err);
+
+        doc.score = undefined; // unset
+        doc.save(function (err, doc, count){
+          should.strictEqual(null, err);
+
+          DefaultTestObject.findById(doc._id, function (err, doc){
+            should.strictEqual(null, err);
+
+            doc.score = 55;
+            doc.save(function (err, doc, count){
+              db.close();
+              should.strictEqual(null, err);
+              should.equal(doc.score, 55);
+              should.equal(count, 1);
+            });
+          });
+        });
+      });
+    })
   }
+
 };
