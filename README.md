@@ -25,6 +25,12 @@ Defining a model is as easy as:
 
     var Post = mongoose.model('BlogPost', BlogPost);
 
+## Documentation
+
+[mongoosejs.com](http://mongoosejs.com/)
+
+## Try it live
+<a href="https://runnable.com/#learnboost/mongoose/code.js/launch" target="_blank"><img src="https://runnable.com/external/styles/assets/runnablebtn.png" style="width:67px;height:25px;"></a>
 ## Installation
 
 The recommended way is through the excellent [NPM](http://www.npmjs.org/):
@@ -72,15 +78,15 @@ Models are defined through the `Schema` interface.
 Aside from defining the structure of your documents and the types of data you're storing, a Schema handles the definition of:
 
 * [Validators](http://mongoosejs.com/docs/validation.html) (async and sync)
-* [Defaults](http://mongoosejs.com/docs/schematypes.html)
-* [Getters](http://mongoosejs.com/docs/getters-setters.html)
-* [Setters](http://mongoosejs.com/docs/getters-setters.html)
-* [Indexes](http://mongoosejs.com/docs/indexes.html)
+* [Defaults](http://mongoosejs.com/docs/api.html#schematype_SchemaType-default)
+* [Getters](http://mongoosejs.com/docs/api.html#schematype_SchemaType-get)
+* [Setters](http://mongoosejs.com/docs/api.html#schematype_SchemaType-set)
+* [Indexes](http://mongoosejs.com/docs/guide.html#indexes)
 * [Middleware](http://mongoosejs.com/docs/middleware.html)
-* [Methods](http://mongoosejs.com/docs/methods-statics.html) definition
-* [Statics](http://mongoosejs.com/docs/methods-statics.html) definition
+* [Methods](http://mongoosejs.com/docs/guide.html#methods) definition
+* [Statics](http://mongoosejs.com/docs/guide.html#statics) definition
 * [Plugins](http://mongoosejs.com/docs/plugins.html)
-* [DBRefs](http://mongoosejs.com/docs/dbrefs.html)
+* [psuedo-JOINs](http://mongoosejs.com/docs/populate.html)
 
 The following example shows some of these features:
 
@@ -129,7 +135,7 @@ Or we can find documents from the same collection
       // docs.forEach
     });
 
-You can also `findOne`, `findById`, `update`, etc. For more details check out [this link](http://mongoosejs.com/docs/finding-documents.html).
+You can also `findOne`, `findById`, `update`, etc. For more details check out [this link](http://mongoosejs.com/docs/queries.html).
 
 **Important!** If you opened a separate connection using `mongoose.createConnection()` but attempt to access the model through `mongoose.model('ModelName')` it will not work as expected since it is not hooked up to an active db connection. In this case access your model through the connection you created:
 
@@ -289,36 +295,32 @@ You can find the [Dox](http://github.com/visionmedia/dox) generated API docs [he
 
 ## Getting support
 
-Please subscribe to the Google Groups [mailing list](http://groups.google.com/group/mongoose-orm).
-
-Join #mongoosejs on freenode.
+- Google Groups [mailing list](http://groups.google.com/group/mongoose-orm)
+- (irc) #mongoosejs on freenode
+- reporting [issues](https://github.com/learnboost/mongoose/issues/)
+- [10gen](http://www.mongodb.org/display/DOCS/Technical+Support)
 
 ## Driver access
 
-The driver being used defaults to [node-mongodb-native](https://github.com/christkv/node-mongodb-native) and is directly accessible through `YourModel.collection`. **Note**: using the driver directly bypasses all Mongoose power-tools like validation, getters, setters, hooks, etc.
+The driver being used defaults to [node-mongodb-native](https://github.com/mongodb/node-mongodb-native) and is directly accessible through `YourModel.collection`. **Note**: using the driver directly bypasses all Mongoose power-tools like validation, getters, setters, hooks, etc.
 
 ## Mongoose Plugins
 
-Take a peek at the [plugins page](https://github.com/LearnBoost/mongoose/wiki/Plugins) to see contributions from the community. Add your own!
+Take a peek at the [plugins search site](http://plugins.mongoosejs.com/) to see related modules from the community.
 
 ## Contributing to Mongoose
 
 ### Cloning the repository
 
-Make a fork of `mongoose`, then clone it in your computer. The `v2.x` branch contains the current stable release, and the `master` branch the next upcoming major release.
+    git clone git://github.com/LearnBoost/mongoose.git
 
 ### Guidelines
 
-- Please write inline documentation for new methods or class members.
-- Please write tests and make sure your tests pass.
-- Before starting to write code, look for existing tickets or create one for your specific issue (unless you're addressing something that's clearly broken). That way you avoid working on something that might not be of interest or that has been addressed already in a different branch.
+See [contributing](http://mongoosejs.com/docs/contributing.html).
 
 ## Credits
 
-- Guillermo Rauch - guillermo@learnboost.com - [Guille](http://github.com/guille)
-- Nathan White - [nw](http://github.com/nw/)
-- Brian Noguchi - [bnoguchi](https://github.com/bnoguchi)
-- Aaron Heckmann - [aheckmann](https://github.com/aheckmann)
+[contributors](https://github.com/learnboost/mongoose/graphs/contributors)
 
 ## License
 

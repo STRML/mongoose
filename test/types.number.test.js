@@ -5,25 +5,27 @@
 
 var mongoose = require('./common').mongoose
   , SchemaNumber = mongoose.Schema.Types.Number
-  , should = require('should')
+  , assert = require('assert')
 
 /**
  * Test.
  */
 
-module.exports = {
+describe('types.number', function(){
 
-  'an empty string casts to null': function () {
+  it('an empty string casts to null', function (done) {
     var n = new SchemaNumber();
-    should.strictEqual(n.cast(''), null);
-  },
+    assert.strictEqual(n.cast(''), null);
+    done();
+  })
 
-  'a null number should castForQuery to null': function () {
+  it('a null number should castForQuery to null', function (done) {
     var n = new SchemaNumber();
-    should.strictEqual(n.castForQuery(null), null);
-  },
+    assert.strictEqual(n.castForQuery(null), null);
+    done();
+  })
 
-  'undefined throws number cast error': function () {
+  it('undefined throws number cast error', function (done) {
     var n = new SchemaNumber();
     var err;
     try {
@@ -31,10 +33,11 @@ module.exports = {
     } catch (e) {
       err = e;
     }
-    should.strictEqual(true, !! err);
-  },
+    assert.strictEqual(true, !! err);
+    done();
+  })
 
-  'array throws cast number error': function () {
+  it('array throws cast number error', function (done) {
     var n = new SchemaNumber();
     var err;
     try {
@@ -42,10 +45,11 @@ module.exports = {
     } catch (e) {
       err = e;
     }
-    should.strictEqual(true, !! err);
-  },
+    assert.strictEqual(true, !! err);
+    done();
+  })
 
-  'three throws cast number error': function () {
+  it('three throws cast number error', function (done) {
     var n = new SchemaNumber();
     var err;
     try {
@@ -53,10 +57,11 @@ module.exports = {
     } catch (e) {
       err = e;
     }
-    should.strictEqual(true, !! err);
-  },
+    assert.strictEqual(true, !! err);
+    done();
+  })
 
-  '{} throws cast number error': function () {
+  it('{} throws cast number error', function (done) {
     var n = new SchemaNumber();
     var err;
     try {
@@ -64,10 +69,11 @@ module.exports = {
     } catch (e) {
       err = e;
     }
-    should.strictEqual(true, !! err);
-  },
+    assert.strictEqual(true, !! err);
+    done();
+  })
 
-  'does not throw number cast error': function () {
+  it('does not throw number cast error', function (done) {
     var n = new SchemaNumber();
     var items = [1, '2', '0', null, '', new String('47'), new Number(5), Number(47), 09, 0x12];
     var err;
@@ -78,7 +84,8 @@ module.exports = {
     } catch (e) {
       err = e;
     }
-    should.strictEqual(false, !! err, err);
-  }
+    assert.strictEqual(false, !! err, err);
+    done();
+  })
 
-};
+})
